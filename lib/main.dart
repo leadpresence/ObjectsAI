@@ -6,6 +6,8 @@ import 'package:velocity_x/velocity_x.dart';
 import 'home.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter/services.dart';
+import 'widgets/mybutton.dart';
 
 List<CameraDescription> cameras;
 
@@ -13,14 +15,21 @@ Future<void> main() async {
   // initialize the cameras when the app starts
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-  // running the app
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.purple, // navigation bar color
+    statusBarColor: Colors.white, // status bar color
+    statusBarIconBrightness: Brightness.dark, // status bar icon color
+    systemNavigationBarIconBrightness:
+        Brightness.dark, // color of navigation controls
+  ));
   runApp(MaterialApp(
     title: "ObectAI",
     home: Welcome(),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-        primaryColor: Colors.purple[50],
-        accentColor: Colors.purple[50],
+        // appBarTheme: ,
+        // primarySwatch: Colors.purple[50],
+        // accentColor: Colors.purple[50],
         brightness: Brightness.light),
   ));
 }
@@ -28,10 +37,8 @@ Future<void> main() async {
 class Welcome extends StatelessWidget {
   const Welcome({Key key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: "ObjectAI"
@@ -41,7 +48,8 @@ class Welcome extends StatelessWidget {
             .white
             .make()
             .shimmer(primaryColor: Colors.purple, secondaryColor: Colors.white),
-        backgroundColor: Color(0xFFe0bafc),
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
       ),
@@ -51,7 +59,7 @@ class Welcome extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             Container(
-              height: 260,
+              height: 290,
               padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: Image(
                   image: CachedNetworkImageProvider(
@@ -68,8 +76,6 @@ class Welcome extends StatelessWidget {
                     color: Colors.black),
               ),
             ),
-            // const SizedBox(height:45),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: Text(
@@ -83,33 +89,13 @@ class Welcome extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 45),
-            Container(
-              // width: double.infinity,
-              width: MediaQuery.of(context).size.width / 3,
-              padding: const EdgeInsets.symmetric(horizontal: 28.0),
-              height: 50,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Color(0xFFe0bafc), Color(0xffb960fa)],
-                    end: Alignment.bottomRight,
-                    begin: Alignment.topLeft),
-              ),
-              child: FlatButton(
-                color: Colors.transparent,
-                textColor: Colors.white,
-                child: Text('Start Start Scanning Things'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                },
-              ),
-            ),
+            myButton(context),
             const SizedBox(height: 45),
           ],
         ),
       ),
     );
   }
+
+
 }

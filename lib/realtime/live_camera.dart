@@ -45,22 +45,19 @@ class _LiveFeedState extends State<LiveFeed> {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Real Time Object Detection"),
-      ),
-      body: Stack(
-        children: <Widget>[
-          CameraFeed(widget.cameras, setRecognitions),
-          BoundingBox(
-            _recognitions == null ? [] : _recognitions,
-            math.max(_imageHeight, _imageWidth),
-            math.min(_imageHeight, _imageWidth),
-            screen.height,
-            screen.width,
-          ),
-        ],
-      ),
+    return  Stack(
+          children: <Widget>[
+            CameraFeed(widget.cameras, setRecognitions),
+            BoundingBox(
+              _recognitions == null ? [] : _recognitions,
+              math.max(_imageHeight, _imageWidth),
+              math.min(_imageHeight, _imageWidth),
+              screen.height,
+              screen.width,
+            ),
+          ],
+        // ),
+      // ),
     );
   }
 }

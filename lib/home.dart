@@ -1,7 +1,9 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ObjectsAI/realtime/live_camera.dart';
 import 'package:ObjectsAI/static/static.dart';
+import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +31,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+//  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+//       statusBarColor: Colors.transparent,
+//       systemNavigationBarColor: Colors.transparent,
+//   ));
+
+
     return Scaffold(
       backgroundColor: Color(0xFFFFFFFF),
       appBar: AppBar(
@@ -39,50 +47,29 @@ class _HomePageState extends State<HomePage> {
             .white
             .make()
             .shimmer(primaryColor: Colors.purple, secondaryColor: Colors.white),
-        backgroundColor: Color(0xFFe0bafc),
+     
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+
         elevation: 0.0,
         centerTitle: true,
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            courousel(),
-            const SizedBox(
-              height: 60,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FlatButton(
-                  color: Color(0xffb960fa),
-                  textColor: Colors.white,
-                  child: Text("Detect in Image"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StaticImage(),
-                      ),
-                    );
-                  },
-                ),
-                FlatButton(
-                  color: Color(0xFFe0bafc),
-                  textColor: Colors.white,
-                  child: Text("Real Time Detection"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LiveFeed(cameras),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 18.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              courousel(),
+              const SizedBox(
+                height: 60,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [realElevatedButton(), detectedImageElevatedButton()],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -113,5 +100,45 @@ class _HomePageState extends State<HomePage> {
         autoPlayAnimationDuration: Duration(seconds: 2),
       ),
     ].vStack();
+  }
+
+  Widget realElevatedButton() {
+    return ElevatedButton(
+     
+      style: ElevatedButton.styleFrom(
+         elevation:5,
+          primary: Color(0xffb960fa),
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.normal)),
+      child: Text("Real Time Detection"),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LiveFeed(cameras),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget detectedImageElevatedButton() {
+    return ElevatedButton(
+     
+      style: ElevatedButton.styleFrom(
+         elevation:5,
+          primary: Color(0xffb960fa),
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.normal)),
+      child: Text("Detect Image"),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => StaticImage(),
+          ),
+        );
+      },
+    );
   }
 }
