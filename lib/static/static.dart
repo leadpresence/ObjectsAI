@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class StaticImage extends StatefulWidget {
   @override
@@ -130,12 +131,27 @@ class _StaticImageState extends State<StaticImage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Object Detector"),
+            // backgroundColor: Color(0xffb960fa),
+            
+        title: "Object Detector"
+            .text
+            .xl2
+            .bold
+            .white
+            .make()
+            .shimmer(primaryColor: Colors.purple, secondaryColor: Colors.white),
+     
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+
+        elevation: 0.0,
+        centerTitle: true,
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            backgroundColor: Color(0xffb960fa),
             heroTag: "Fltbtn2",
             child: Icon(Icons.camera_alt),
             onPressed: getImageFromCamera,
@@ -144,6 +160,8 @@ class _StaticImageState extends State<StaticImage> {
             width: 10,
           ),
           FloatingActionButton(
+            backgroundColor: Color(0xffb960fa),
+
             heroTag: "Fltbtn1",
             child: Icon(Icons.photo),
             onPressed: getImageFromGallery,
